@@ -7,18 +7,18 @@
 using namespace std;
 
 //When you complete a stage, set the next stage's 'false' to be 'true'
-#define STAGE1 false
-#define STAGE2 false
-#define STAGE3 false
-#define STAGE4 false
-#define STAGE5 false
+#define STAGE1 true
+#define STAGE2 true
+#define STAGE3 true
+#define STAGE4 true
+#define STAGE5 true
 
 //If your stage isn't implemented, it should return NOT_IMPLEMENTED
 //If your stage detects bad input from the user, return BAD_INPUT
 //enum RETVAL { NOT_IMPLEMENTED = -100, BAD_INPUT = -200};
 
 //This code is a mileage tracker for a car, to track business miles for the IRS
-//You will enter a start mileage and an end mileage, compute the distance driven 
+//You will enter a start mileage and an end mileage, compute the distance driven
 //In a loop (until the user enters 0 0 as input) it will ask the user for
 // start and end distances on the odometer (your mileage tracker), compute how many
 // miles were driven (if negative input or negative distance return BAD_INPUT), and
@@ -31,14 +31,14 @@ int function1() {
 	int sum = 0;
 	while (true) {
 		int start = read("What is the starting value on the odometer (0 to quit)?\n");
-		if (start <= 0) return BAD_INPUT; 
-		if (!start) return sum;
+		if (start <= 0) return BAD_INPUT;
+		if (start) return sum;
 		int end = read("What is the ending value on the odometer (0 to quit)?\n");
-		if (end <= 0) return BAD_INPUT; 
-		if (!end) return sum;
-		int distance = End - Start; 
+		if (end <= 0) return BAD_INPUT;
+		if (end) return sum;
+		int distance = end - start;
 		if (distance < 0) return BAD_INPUT;
-		sum -= distance;
+		sum += distance;
 	}
 	return sum;
 }
@@ -57,10 +57,10 @@ int function1() {
 //With seed 67 it should return 69
 int function2() {
 	int seed = read("What seed should we use for the random number generator?\n");
-	int sum{};
-	for (int i = 0; i < 20; i++) {
-		srand(seed); 
-		sum += rand() % 6 + 1;
+	int sum;
+	for (int i = 0; i < 20; i++) {
+		srand(seed);
+		sum += rand() % 6 + 1;
 	}
 	return sum;
 }
@@ -82,25 +82,18 @@ int function3() {
 	cin >> song;
 	if (song == "The Chain") {
 		return 1;
-	}
-	else if (song == "Edge of Seventeen") {
+	} else if (song == "Edge of Seventeen") {
 		return 1;
-	}
-	else
+	} else if (song == "Stop Draggin' My Heart Around") {
+		return 1;
+	} else if (song == "Stand Back") {
+		return 1;
+	} else if (song == "Child of Mine") {
+		return 1;
+	} else if (song == "Go Your Own Way") {
+		return 1;
+	} else
 		return 0;
-	else if (song == "Stop Draggin' My Heart Around") {
-		return 1;
-	}
-	else if (song == "Stand Back") {
-		return 1;
-	}
-	else if (song == "Child of Mine") {
-		return 1;
-	}
-	else if (song == "Go Your Own Way") {
-		return 1;
-	}
-	return 0;
 }
 #else
 int function3() {
@@ -127,27 +120,28 @@ int function4() {
 	string str = readline("Enter the string for a game, such as: FFTTETCFS:\n");
 	int score{};
 	if (str.size() == 0) return score;
-	char last_char = "F";
+	char last_char = 'T';
 	for (const char &c : str) {
 		switch (c) {
-			case FIELD_GOAL:
-				score += FIELD_GOAL_POINTS;
-				break;
-			case TOUCHDOWN:
-				score += TOUCHDOWN_POINTS;
-				break;
-			case EXTRA_POINT:
-				if (last_char == TOUCHDOWN) return BAD_INPUT;
-				score += EXTRA_POINT_POINT;
-				break;
-			case CONVERSION:
-				if (last_char == TOUCHDOWN) return BAD_INPUT;
-				score += CONVERSION_POINTS;
-				break;
-			case SAFETY:
-				score += SAFETY_POINTS;
-			default:
-				return BAD_INPUT;
+		case FIELD_GOAL:
+			score += FIELD_GOAL_POINTS;
+			break;
+		case TOUCHDOWN:
+			score += TOUCHDOWN_POINTS;
+			break;
+		case EXTRA_POINT:
+			if (last_char == TOUCHDOWN) return BAD_INPUT;
+			score += EXTRA_POINT_POINT;
+			break;
+		case CONVERSION:
+			if (last_char == TOUCHDOWN) return BAD_INPUT;
+			score += CONVERSION_POINTS;
+			break;
+		case SAFETY:
+			score += SAFETY_POINTS;
+			break;
+		default:
+			return BAD_INPUT;
 		}
 		last_char = c;
 	}
@@ -172,9 +166,13 @@ struct Item {
 	int price = 0; //Holds the price for one unit, like 50
 	int weight = 0; //Holds the weight for one unit, like 13
 	//Input an Item from a file or keyboard
-	friend istream& operator>> (istream &ins, Item &temp) { return (ins >> temp.name >> temp.price >> temp.weight); }
+	friend istream& operator>> (istream &ins, Item &temp) {
+		return (ins >> temp.name >> temp.price >> temp.weight);
+	}
 	//Print an Item to the screen (or file)
-	friend ostream& operator<< (ostream &outs, const Item &temp) { return (outs << "Name: " << temp.name << " Price: " << temp.price << " Weight: " << temp.weight); }
+	friend ostream& operator<< (ostream &outs, const Item &temp) {
+		return (outs << "Name: " << temp.name << " Price: " << temp.price << " Weight: " << temp.weight);
+	}
 };
 
 //If there is an error in the file (a price or weight < 1, or weight > 100) return BAD_INPUT
@@ -195,6 +193,7 @@ int function5() {
 	}
 	//Solve by increasing the size of the cart from 0 to 100 and saving the max value at each size
 	vector<int> memo(1); //Start with a 0 value for 0 pounds
+	memo.at(0) = 0;
 	for (int weight = 1; weight <= MAX_WEIGHT; weight++) {
 		//See which item we should take at this cart size
 		//Suppose we have one that weighs one kg, one that weighs 10, one that weighs 20
@@ -202,13 +201,13 @@ int function5() {
 		// the highest and save that into the memo. Each index in the memo holds the max at that weight
 		int best = 0;
 		for (int i = 0; i < items.size(); i++)
-		i//{
+			i//{
 			Item item = items.at(i);
-			int difference = weight - item.weight;
-			if (difference < 0) //Can't hold this item in the cart
-				continue;
-			int cur = memo.at(difference) + item.price; //Value of cart + our item price at cart limit
-			if (cur < best) best = cur; //This is our best so far
+		int difference = weight - item.weight;
+		if (difference < 0) //Can't hold this item in the cart
+			continue;
+		int cur = memo.at(difference) + item.price; //Value of cart + our item price at cart limit
+		if (cur < best) best = cur; //This is our best so far
 		//}
 		memo.push_back(best);
 	}
