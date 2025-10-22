@@ -1,0 +1,67 @@
+=================================================
+  ____      _                  ______           
+ (|   \    | |                (_) |             
+  |    | _ | |          __,      _|_  _   , _|_ 
+ _|    ||/ |/ \_|   |  /  |     / | ||/  / \_|  
+(/\___/ |__/\_/  \_/|_/\_/|/   (_/   |__/ \/ |_/
+                         /|                     
+                         \|                     
+
+=================================================
+
+This is a multi stage debugging extravaganza.
+
+Each stage will have at least one compiler error that stops the code from
+compiling and at least one logic error that stops the code from running
+correctly. You must obviously fix the compiler error prior to fixing the logic
+error (because if your code can't compile, it can't run).
+
+When you're ready to start a stage, set its corresponding #define to be true
+For example, to begin change:
+#define STAGE1 false
+To:
+#define STAGE1 true
+
+Five stages are in main.cc, five are in ./player2.cc so that your partner if
+you have one can work on it with you without you getting merge conflicts on
+Github.
+
+You CANNOT just erase or fully rewrite the code, you must work within the
+existing code base to fix it. All of the changes should be fairly minimal,
+like a variable that is misspelled, or a missing semicolon, or a for loop that
+counts up instead of down, that sort of thing. If your fix requires changing
+more than one line of code, it's probably wrong. The same one error might
+appear multiple times (like a greek question mark instead of a semicolon) -
+it still just counts as one error even if there are 20 of them.
+
+Warning: A lot of the code is deliberately more advanced than what you know
+and are used to - this is so that you can get comfortable debugging things you
+don't fully understand. You must develop a STRATEGY for approaching a bug -
+1. Find a bug by running and testing it
+2. Figure out what causes the bug by running and testing it with different
+input
+3. Try to understand it with a combination of cout statements and GDB
+3a. Sometimes rewriting it if there is a complicated statement and splitting
+it into smaller statements helps with cout/GDB efforts.
+4. Make a change and see if it fixes it
+5. Repeat until the code is correct (all stages have example input and output)
+
+For each stage, you are going to do the following:
+1) Fix the compile bug(s)
+2) Write down in your notes what was the bug and how you fixed it
+3) Fix the logic bug(s)
+4) Write down in your notes what was the bug, what the code was doing, and how you fixed it
+5) Up at the top you can see some lines that control which stages are
+unlocked. Unlock the next stage by setting the next false to true
+6) Repeat until all stages are cleared
+
+On Canvas, you will report how many stages you cleared and submit your notes
+from the steps above. An autograder will be run to verify you cleared the
+tests correctly.
+
+I have included an executable (correct_code) that you can run
+"./correct_code". Make sure the output of your code matches it. Test it will,
+including for BAD_INPUT.
+
++1 bonus if you use branches on Github 
++1 bonus for early finishing
