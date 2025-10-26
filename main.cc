@@ -37,6 +37,11 @@ int function1() {
 		if (end <= 0) return BAD_INPUT;
 		if (end) return sum;
 		int distance = end - start;
+		if (!start) return sum;
+		int end = read("What is the ending value on the odometer (0 to quit)?\n");
+		if (end <= 0) return BAD_INPUT;
+		if (!end) return sum;
+		int distance = End - Start;
 		if (distance < 0) return BAD_INPUT;
 		sum += distance;
 	}
@@ -61,6 +66,10 @@ int function2() {
 	for (int i = 0; i < 20; i++) {
 		srand(seed);
 		sum += rand() % 6 + 1;
+	int sum{};
+	for (int i = 0; i < 20; i++) {
+		srand(seed);
+		sum += rand() % 6 + 1;
 	}
 	return sum;
 }
@@ -92,8 +101,16 @@ int function3() {
 		return 1;
 	} else if (song == "Go Your Own Way") {
 		return 1;
-	} else
-		return 0;
+	} else if (song == "Stop Draggin' My Heart Around") {
+		return 1;
+	} else if (song == "Stand Back") {
+		return 1;
+	} else if (song == "Child of Mine") {
+		return 1;
+	} else if (song == "Go Your Own Way") {
+		return 1;
+	}
+	return 0;
 }
 #else
 int function3() {
