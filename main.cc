@@ -224,7 +224,7 @@ int function5() {
 		if (difference < 0) //Can't hold this item in the cart
 			continue;
 		int cur = memo.at(difference) + item.price; //Value of cart + our item price at cart limit
-		if (cur < best) best = cur; //This is our best so far
+		if (cur > best) best = cur; //This is our best so far
 		//}
 		memo.push_back(best);
 	}
